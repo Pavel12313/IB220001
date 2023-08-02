@@ -15,6 +15,7 @@ class CreateController extends Controller
         ]);
 
         $tweet = new Tweet();
+        $tweet->user_id = $request->user()->id;
         $tweet->content = $request->input('tweet');
         $tweet->save();
 

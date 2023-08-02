@@ -19,7 +19,6 @@ class User extends Authenticatable implements MustVerifyEmail // Added the missi
      */
     protected $fillable = [
         'name',
-        'username', // Added the username field
         'email',
         'password',
     ];
@@ -42,4 +41,9 @@ class User extends Authenticatable implements MustVerifyEmail // Added the missi
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function tweets()
+{
+    return $this->hasMany(Tweet::class);
 }
+}
+

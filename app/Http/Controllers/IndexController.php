@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tweet;
+use App\Services\TweetService;
 
 class IndexController extends Controller
 {
-    public function a()
+    public function a(TweetService $tweetService)
     {
-        $tweets = Tweet::orderByDesc('created_at')->get();
+        $tweets = $tweetService->getTweets();
         return view('tweet.index', ['tweets' => $tweets]);
     }
-    
 }

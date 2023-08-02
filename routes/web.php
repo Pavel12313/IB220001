@@ -6,7 +6,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Tweet\Update\PutController;
 use App\Http\Controllers\Tweet\DeleteController;
-
+use App\Http\Controllers\Auth\RegisteredUserController; // New import statement
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +33,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// New register routes
+Route::get('/register', [RegisteredUserController::class, 'create'])
+    ->middleware('guest')
+    ->name('register');
+
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->middleware('guest');
+
 Route::get('/post/{id}', '\App\Http\Controllers\PostsController@index');
 Route::get('/tweet', [IndexController::class, 'a'])->name('tweet.index');
 Route::get('/tweet/create', '\App\Http\Controllers\Tweet\CreateController@b')->name('tweet.create');
@@ -46,3 +54,15 @@ Route::delete('/tweet/delete/{tweetId}', [DeleteController::class, 'e'])
     ->name('tweet.delete');
 
 require __DIR__.'/auth.php';
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/post/{id}', [PostsController::class, 'index']);
+    Route::get('/tweet', [IndexController::class, 'a'])->name('tweet.index');
+    Route::post('/tweet/create', [CreateController::class, 'b'])->name('tweet.create');
+    Route::get('/tweet/update/{tweetId}', [UpdateIndexController::class, 'c'])
+        ->name('tweet.update.index')
+        ->where('tweetId', '[0-9]+');
+    Route::put('/tweet/update/{tweetId}', [PutController::class, 'd'])->name('tweet.update.put');
+    Route::delete('/tweet/delete/{tweetId}', [DeleteController::class, 'e'])->name('tweet.delete');
+});

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tweet;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -8,8 +8,10 @@ class CreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -17,17 +19,32 @@ class CreateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'tweet' => 'required|string|max:140'
+            'tweets' => 'required|max:140'
         ];
     }
 
+    /**
+     * Get the tweet content from the request.
+     *
+     * @return string
+     */
     public function tweet(): string
     {
-        return $this->input('tweet');
+        return $this->input('tweets');
+    }
+
+    /**
+     * Get the user's id from the request.
+     *
+     * @return int
+     */
+    public function userId(): int
+    {
+        return $this->user()->id;
     }
 }
