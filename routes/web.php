@@ -56,5 +56,10 @@ Route::put('/tweet/{tweetId}', '\App\Http\Controllers\Tweet\Update\PutController
 Route::delete('/tweet/delete/{tweetId}', [DeleteController::class, 'e'])
     ->name('tweet.delete');
 
+
+    Route::get('/email/verify', function () {
+        return view('auth.verify-email');
+    })->middleware('auth')->name('verification.notice');
+    
 require __DIR__.'/auth.php';
 

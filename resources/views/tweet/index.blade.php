@@ -8,6 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
+    
     <x-layout title="Top - つぶやきアプリ">
         <x-layouts.single>
         </x-layouts.single>
@@ -19,7 +20,7 @@
 
     <div>
         @foreach ($tweets as $tweet)
-            <x-tweet :tweet="$tweet"/>
+            <x-tweet :tweet="$tweet"/>t
         @endforeach
     </div>
 
