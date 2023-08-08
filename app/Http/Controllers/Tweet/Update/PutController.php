@@ -12,16 +12,19 @@ class PutController extends Controller
 {
     public function d(UpdateRequest $request, TweetService $tweetService)
     {
-        if (!$tweetService->checkOwnTweet($request->user()->id, $request->id)) {
+        $tweetId = (int) $request->route('tweetId');
+        if (!$tweetService->checkOwnTweet($request->user()->id, $tweetId)) {
             throw new AccessDeniedHttpException();
         }
-
-        $tweet = Tweet::where('id', $request->id)->firstOrFail();
-        $tweet->content = $request->tweets();
+    
+        $tweet = Tweet::where('id', $tweetId)->firstOrFail();
+        $tweet->content = $request->tweet;
         $tweet->save();
-
+    
         return redirect()
             ->route('tweet.update.index', ['tweetId' => $tweet->id])
             ->with('feedback.success', "つぶやきを編集しました");
     }
+    
+    
 }

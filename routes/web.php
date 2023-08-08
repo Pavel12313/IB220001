@@ -45,24 +45,16 @@ Route::get('/post/{id}', '\App\Http\Controllers\PostsController@index');
 Route::get('/tweet', [IndexController::class, 'a'])->name('tweet.index');
 Route::get('/tweet/create', '\App\Http\Controllers\Tweet\CreateController@b')->name('tweet.create');
 
-Route::get('/tweet/update/{tweetId}', '\App\Http\Controllers\Tweet\Update\IndexController@c')
-    ->name('tweet.update.index');
+Route::get('/tweet/{tweetId}/edit', '\App\Http\Controllers\Tweet\Update\IndexController')
+->name('tweet.update.index')
+->where('tweetId', '[0-9]+');
 
-Route::put('/tweet/update/{tweetId}', [PutController::class, 'c'])->name('tweet.update.put');
+Route::put('/tweet/{tweetId}', '\App\Http\Controllers\Tweet\Update\PutController@d')
+    ->name('tweet.update.put')
+    ->where('tweetId', '[0-9]+');
 
 Route::delete('/tweet/delete/{tweetId}', [DeleteController::class, 'e'])
     ->name('tweet.delete');
 
 require __DIR__.'/auth.php';
 
-
-Route::middleware('auth')->group(function () {
-    Route::get('/post/{id}', [PostsController::class, 'index']);
-    Route::get('/tweet', [IndexController::class, 'a'])->name('tweet.index');
-    Route::post('/tweet/create', [CreateController::class, 'b'])->name('tweet.create');
-    Route::get('/tweet/update/{tweetId}', [UpdateIndexController::class, 'c'])
-        ->name('tweet.update.index')
-        ->where('tweetId', '[0-9]+');
-    Route::put('/tweet/update/{tweetId}', [PutController::class, 'd'])->name('tweet.update.put');
-    Route::delete('/tweet/delete/{tweetId}', [DeleteController::class, 'e'])->name('tweet.delete');
-});
