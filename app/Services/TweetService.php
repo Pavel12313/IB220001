@@ -17,8 +17,10 @@ class TweetService
         if (!$tweet) {
             return false;
         }
-
-        return $tweet->user_id === $userId;
+    
+        // Cast both user_id and id to integers
+        return (int) $tweet->user_id === (int) $userId;
     }
+    
 }
 
